@@ -17,7 +17,8 @@ const orderRoutes = require('./routes/order')
 const dbaddress = "mongodb+srv://chaeeun:codms13579@cluster0.0h26j.mongodb.net/first?retryWrites=true&w=majority"
 const dboptions = {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: true
 }
 
 mongoose
