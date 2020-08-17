@@ -20,6 +20,7 @@ router.get('/total', (req, res) => {
     // })
 })
 
+
 //product data 생성하기
 router.post('/register', (req, res) => {
     const newProduct = productModel({
@@ -65,4 +66,22 @@ router.delete('/', (req, res) =>  {
     })
 })
 
+//detail product get API
+router.get('/:productId', (req, res) => {
+    const id = req.params.productId
+
+    productModel
+        .findById(id)
+        .then(doc => {
+            res.json({
+                message: "get product data from "+ id,
+                productInfo: doc
+            })
+        })
+        .catch(err => {
+            res.json({
+                message: err.message
+            })
+        })
+})
 module.exports = router;
