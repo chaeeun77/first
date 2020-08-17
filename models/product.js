@@ -8,4 +8,4 @@ const productSchema = new mongoose.Schema({
 })
 
 //3번
-model.exports = mongoose.model("product", productSchema)
+module.exports = mongoose.model("product", productSchema);
