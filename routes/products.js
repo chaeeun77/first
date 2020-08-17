@@ -60,11 +60,27 @@ router.put('/', (req, res) => {
 })
 
 //product data delete하기
-router.delete('/', (req, res) =>  {
-    res.json({
-        message: 'product data delete하기'
-    })
+router.delete('/:productId', (req, res) => {
+    const id = req.params.productId
+    productModel
+        .findByIdAndRemove(id)
+        .then(result => {
+            res.json({
+                message: "deleted product at " + id
+            })
+        })
+        .catch(err => {
+            res.json({
+                message: err.message
+            })
+        })
 })
+
+// router.delete('/', (req, res) =>  {
+//     res.json({
+//         message: 'product data delete하기'
+//     })
+// })
 
 //detail product get API
 router.get('/:productId', (req, res) => {
