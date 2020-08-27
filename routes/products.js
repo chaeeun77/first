@@ -57,7 +57,8 @@ router.put('/:productId', (req, res) => {
     const id = req.params.productId
     const updateOps = {};
     for (const ops of req.body) {
-        updateOps[ops.propName] = ops.value;
+        updateOps[ops.propName] = ops.value,
+        console.log(ops);
     }
     productModel
         .findByIdAndUpdate(id, {$set: updateOps})
