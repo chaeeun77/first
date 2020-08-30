@@ -6,35 +6,54 @@ const bcrypt = require('bcryptjs')
 
 //회원가입
 router.post('/register', (req, res) => {
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
+    //email 중복체크 => password 암호화 => database 저장 (이걸 역으로 진행함)
+    userModel
+        .findOne({email: req.body.useremail})
+        .then(user => {
+            if(user) {
+                return res.json({
+                    message: "이미 아이디가 존재합니다."
+                })
+            } else{
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
 
-        if(err){
-            return res.json({
+                    if(err){
+                        return res.json({
+                            message: err.message
+                        })
+                    }
+                    else{
+                        const newUser = new userModel({
+                            username: req.body.name,
+                            email: req.body.useremail,
+                            password: hash
+                        })
+
+                        newUser
+                            .save()
+                            .then(user => {
+                                res.json({
+                                    message: "saved data",
+                                    userInfo: user
+                                })
+                            })
+                            .catch(err => {
+                                res.json({
+                                    message: err.message
+                                })
+                            })
+                    }
+                })
+            }
+
+        })
+        .catch(err => {
+            res.json({
                 message: err.message
             })
-        }
-        else{
-            const newUser = new userModel({
-                username: req.body.name,
-                email: req.body.useremail,
-                password: hash
-            })
+        })
 
-            newUser
-                .save()
-                .then(user => {
-                    res.json({
-                        message: "saved data",
-                        userInfo: user
-                    })
-                })
-                .catch(err => {
-                    res.json({
-                        message: err.message
-                    })
-                })
-        }
-    })
+
 
 })
 
