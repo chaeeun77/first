@@ -14,6 +14,7 @@ require('./config/db')
 
 const productRoutes = require('./routes/products')
 const orderRoutes = require('./routes/order')
+const userRoutes = require('./routes/user')
 
 //middle wear 설정
 app.use(morgan('dev'));
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 //router
 app.use('/products', productRoutes)
 app.use('/orders', orderRoutes)
+app.use('/user', userRoutes)
 
 const PORT = process.env.PORT || 7000;
 
